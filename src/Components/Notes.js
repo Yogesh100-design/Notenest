@@ -46,10 +46,18 @@ function Notes(props) {
     }
   };
 
-  const handleClick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
+  const handleClick = async (e) => {
+    // Avoid page reload
+    e.preventDefault(); 
+    
+    const result = await editNote(note.id, note.etitle, note.edescription, note.etag);
     refclose.current.click();
-    props.showAlert("Note updated successfuly!", "success");
+
+    if (result && result.success) {
+        props.showAlert("Note updated successfully!", "success");
+    } else {
+        props.showAlert("Failed to update note.", "danger");
+    }
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
