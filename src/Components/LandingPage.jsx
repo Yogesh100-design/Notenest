@@ -10,7 +10,7 @@ const LandingPage = () => {
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     }}>
       <div className="container text-center d-flex flex-column justify-content-center flex-grow-1" style={{ padding: '2rem 0' }}>
-        <h1 className="display-3 fw-bold text-primary mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
+        <h1 className="display-3 fw-bold text-primary mb-10" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
           Welcome to NoteNest
         </h1>
         <p className="lead mb-5 text-secondary" style={{ fontSize: '1.5rem', maxWidth: '700px', margin: '0 auto' }}>
@@ -26,7 +26,7 @@ const LandingPage = () => {
           </Link>
         </div>
 
-        <div className="mt-5 row justify-content-center">
+        <div className="mt-5 row justify-content-center ">
           <div className="col-md-4 mb-4">
             <div className="card h-100 border-0 shadow-sm p-3" style={{ borderRadius: '15px' }}>
               <div className="card-body">
@@ -58,7 +58,7 @@ const LandingPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="footer bg-dark text-white py-4 shadow-lg w-100">
+      <footer className="footer bg-dark text-white py-4 shadow-lg w-100 ">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-12 text-center">
