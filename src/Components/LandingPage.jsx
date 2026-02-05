@@ -7,12 +7,9 @@ const LandingPage = () => {
       minHeight: '100vh', 
       display: 'flex', 
       flexDirection: 'column', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      padding: '2rem'
     }}>
-      <div className="container text-center">
+      <div className="container text-center d-flex flex-column justify-content-center flex-grow-1" style={{ padding: '2rem 0' }}>
         <h1 className="display-3 fw-bold text-primary mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
           Welcome to NoteNest
         </h1>
@@ -59,6 +56,25 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="footer bg-dark text-white py-4 shadow-lg w-100">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-12 text-center">
+              <h5 className="fw-bold mb-2">NoteNest</h5>
+              <p className="small mb-2">Crafting clean and efficient solutions with modern web technologies.</p>
+              <div className="d-flex justify-content-center gap-3 mb-3">
+                <a href="#" className="text-white"><i className="fab fa-github"></i></a>
+                <a href="#" className="text-white"><i className="fab fa-linkedin"></i></a>
+                <a href="#" className="text-white"><i className="fab fa-twitter"></i></a>
+              </div>
+              <hr className="bg-white opacity-25" />
+              <p className="small mb-0">&copy; {new Date().getFullYear()} NoteNest | Built with ❤️ by Pritam Gaikwad</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
