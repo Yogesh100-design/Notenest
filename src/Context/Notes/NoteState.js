@@ -37,46 +37,67 @@ const getAllNotes = async () => {
   // ✅ 2. ADD NOTE FUNCTION
   const addNote = async (title, description, tag) => {
     // POST request to add a new note
-    const response = await fetch("http://localhost:5000/api/notes/addNotes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token')
-      },
-      body: JSON.stringify({ title, description, tag }), // Send note data as JSON
-    });
+    try {
+      const response = await fetch("http://localhost:5000/api/notes/addNotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({ title, description, tag }), // Send note data as JSON
+      });
 
-    const json = await response.json(); // Get saved notes from backend (optional)
-    console.log(json)
+      const json = await response.json(); 
 
-    setNotes(notes.concat(json)); // Add new note to state
+      if (json.errors) {
+        console.error("Validation errors:", json.errors);
+        return { success: false, errors: json.errors };
+      } else {
+        setNotes(notes.concat(json)); 
+        return { success: true };
+      }
+    } catch (error) {
+      console.error("Error adding note:", error);
+      return { success: false, error: error.message };
+    }
   };
 
   // ✅ 3. EDIT NOTE FUNCTION
-const editNote = async (id, title, description, tag) => {
-  await fetch(`http://localhost:5000/api/notes/updatingNotes/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token":localStorage.getItem('token')
-    },
-    body: JSON.stringify({ title, description, tag }),
-  });
+  // ✅ 3. EDIT NOTE FUNCTION
+  const editNote = async (id, title, description, tag) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/notes/updatingNotes/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ title, description, tag }),
+      });
 
-  let newNote= JSON.parse(JSON.stringify(notes))
+      if (!response.ok) {
+        throw new Error("Failed to update note");
+      }
 
-  // Manually update the note in state
-  for (let index = 0; index < notes.length; index++) {
-    const element = newNote[index];
-    if (element._id === id) {
-      newNote[index].title = title;
-      newNote[index].description= description;
-      newNote[index].tag = tag;
-       break;
+      // Create a deep copy of notes to update UI
+      let newNotes = JSON.parse(JSON.stringify(notes));
+
+      // Find the note and update it
+      for (let index = 0; index < newNotes.length; index++) {
+        if (newNotes[index]._id === id) {
+          newNotes[index].title = title;
+          newNotes[index].description = description;
+          newNotes[index].tag = tag;
+          break;
+        }
+      }
+      setNotes(newNotes);
+      return { success: true };
+    } catch (error) {
+      console.error("Error updating note:", error);
+      return { success: false, error: error.message };
     }
-  }
-  setNotes(newNote)
-};
+  };
 
 
   // ✅ 4. DELETE NOTE FUNCTION

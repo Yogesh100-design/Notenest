@@ -46,10 +46,18 @@ function Notes(props) {
     }
   };
 
-  const handleClick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
+  const handleClick = async (e) => {
+    // Avoid page reload
+    e.preventDefault(); 
+    
+    const result = await editNote(note.id, note.etitle, note.edescription, note.etag);
     refclose.current.click();
-    props.showAlert("Note updated successfuly!", "success");
+
+    if (result && result.success) {
+        props.showAlert("Note updated successfully!", "success");
+    } else {
+        props.showAlert("Failed to update note.", "danger");
+    }
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -152,17 +160,12 @@ function Notes(props) {
 
       {/* Notes List */}
       <div className="container my-2">
-        <h1
-          className="text-center text-primary fw-bold display-5 mb-4"
-          style={{
-            letterSpacing: "1px",
-            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-          }}
-        >
-          📝 Your notes
-        </h1>
-        <div className="p-4 border border-primary rounded bg-transparent text-primary">
-          {notes.length===0 && 'No notes to display'}
+
+        <div className="row my-4">
+          <h2 className="text-center w-100 mb-4 text-primary">Your Notes</h2>
+          <div className="container mx-2"> 
+            {notes.length===0 && 'No notes to display'}
+          </div>
           {notes.map((note) => (
             <Noteitem key={note._id} note={note} updateNote={updateNote} />
           ))}
