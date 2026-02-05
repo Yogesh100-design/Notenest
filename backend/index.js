@@ -1,34 +1,35 @@
-// Import required modules
+// server.js
 const express = require('express');
 const connectToMongo = require('./db'); // Your MongoDB connection logic
-var cors = require('cors')
+const authRoutes = require('./routes/auth'); // Auth routes
+const notesRoutes = require('./routes/notes');
+
+const cors = require('cors');
+
 const app = express();
 const port = 5000;
 
-app.use(cors())
- 
+app.use(cors()); // Allow all origins by default for simplicity, or configure specific origins if needed
+
+
 // ✅ Connect to MongoDB
 connectToMongo();
 
-// ✅ Middleware to parse JSON body
+// ✅ Middleware to parse JSON
 app.use(express.json());
 
-// ✅ Logger middleware (optional but useful for debugging)
+// ✅ Logger
 app.use((req, res, next) => {
   console.log(`➡️ ${req.method} ${req.url}`);
   next();
 });
 
 // ✅ Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/notes', require('./routes/notes'));
+app.use('/api/auth', authRoutes);
+app.use('/api/notes', notesRoutes);
 
-// ✅ Default route for health check
-app.post('/health', (req, res) => {
-  res.send('🚀 API is running...');
-});
+// ✅ Health check
+app.get('/health', (req, res) => res.send('🚀 API is running...'));
 
-// ✅ Start the server
-app.listen(port, () => {
-  console.log(`✅ Server is running on http://localhost:${port}`);
-});
+// ✅ Start server
+app.listen(port, () => console.log(`✅ Server running on http://localhost:${port}`));

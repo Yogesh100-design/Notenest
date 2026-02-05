@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   let location = useLocation();
-  const isLoggedIn = !!localStorage.getItem("token"); // ✅ Check if user is logged in
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem("token"); 
 
-  useEffect(() => {
-    // console.log(location.pathname);
-  }, [location]);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -34,20 +36,20 @@ function Navbar() {
               <>
                 <li
                   className={`nav-item ${
-                    location.pathname === "/" ? "active fw-bold text-warning" : ""
+                    location.pathname === "/notes" ? "active fw-bold text-warning" : ""
                   }`}
                 >
-                  <Link className="nav-link" to="/">
+                  <Link className="nav-link" to="/notes">
                     Home <span className="sr-only">(current)</span>
                   </Link>
                 </li>
 
                 <li
                   className={`nav-item ${
-                    location.pathname === "/About" ? "active fw-bold text-warning" : ""
+                    location.pathname === "/about" ? "active fw-bold text-warning" : ""
                   }`}
                 >
-                  <Link className="nav-link" to="/About">
+                  <Link className="nav-link" to="/about">
                     About
                   </Link>
                 </li>
@@ -71,20 +73,17 @@ function Navbar() {
 
           {!isLoggedIn ? (
             <form>
-              <Link className="btn btn-outline-light mx-1" to="/Login" role="button">
+              <Link className="btn btn-outline-light mx-1" to="/login" role="button">
                 Login
               </Link>
-              <Link className="btn btn-light text-primary mx-1" to="/Signup" role="button">
+              <Link className="btn btn-light text-primary mx-1" to="/signup" role="button">
                 Signup
               </Link>
             </form>
           ) : (
             <button
               className="btn btn-danger mx-1"
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.reload(); // Or use navigate("/Login")
-              }}
+              onClick={handleLogout}
             >
               Logout
             </button>

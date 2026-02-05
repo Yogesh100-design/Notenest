@@ -1,15 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Signup = (props) => {
+const Signup = ({ showAlert }) => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const { showAlert } = props;
+  const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
 
   const signupUser = async (name, email, password) => {
     try {
@@ -23,20 +17,27 @@ const Signup = (props) => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem("token", data.authToken);
+        if (response.ok) {
+        // Save JWT token to localStorage
+        localStorage.setItem("token", data.authToken || data.JWTdata);
         setCredentials({ name: "", email: "", password: "" }); // clear form
-        navigate("/");
         showAlert("Signup successful!", "success");
+        navigate("/notes"); // redirect to home or dashboard
       } else {
-        if (data.error === "User already exists") {
-          showAlert("User already exists. Try logging in.", "warning");
+        // Display error message from backend
+        if (data.error) {
+          showAlert(data.error, "danger");
+        } else if (data.errors) {
+          // Validation errors
+          const msg = data.errors.map(err => err.msg).join(", ");
+          showAlert(msg, "danger");
         } else {
-          showAlert("Signup failed: " + data.error, "danger");
+          showAlert("Signup failed", "danger");
         }
       }
     } catch (error) {
-      alert("Network error or server not reachable");
+      console.error("Network error or CORS blocked", error);
+      showAlert("Network error or server not reachable", "danger");
     }
   };
 
@@ -50,14 +51,14 @@ const Signup = (props) => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center" style={{ background: "linear-gradient(to right, #FFDEE9, #B5FFFC)" }}>
-      
-      {/* H1 Message */}
+    <div
+      className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center"
+      style={{ background: "linear-gradient(to right, #FFDEE9, #B5FFFC)" }}
+    >
       <h1 className="text-primary fw-bold text-center mb-4 shadow-sm p-3 px-4 rounded bg-white">
         Sign up to get started with <span className="text-warning">NoteNest</span>
       </h1>
 
-      {/* Signup Form */}
       <div className="col-md-6 col-lg-5">
         <div className="card shadow-lg rounded-4 border-0">
           <div className="card-header bg-primary text-white text-center rounded-top-4">
@@ -66,7 +67,9 @@ const Signup = (props) => {
           <div className="card-body p-4">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="name" className="form-label fw-semibold">Full Name</label>
+                <label htmlFor="name" className="form-label fw-semibold">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   className="form-control rounded-3 shadow-sm"
@@ -78,8 +81,11 @@ const Signup = (props) => {
                   autoComplete="off"
                 />
               </div>
+
               <div className="mb-3">
-                <label htmlFor="email" className="form-label fw-semibold">Email</label>
+                <label htmlFor="email" className="form-label fw-semibold">
+                  Email
+                </label>
                 <input
                   type="email"
                   className="form-control rounded-3 shadow-sm"
@@ -91,8 +97,11 @@ const Signup = (props) => {
                   autoComplete="off"
                 />
               </div>
+
               <div className="mb-3">
-                <label htmlFor="password" className="form-label fw-semibold">Password</label>
+                <label htmlFor="password" className="form-label fw-semibold">
+                  Password
+                </label>
                 <input
                   type="password"
                   className="form-control rounded-3 shadow-sm"
@@ -104,13 +113,21 @@ const Signup = (props) => {
                   autoComplete="off"
                 />
               </div>
+
               <div className="d-grid">
-                <button type="submit" className="btn btn-primary rounded-3 shadow">Sign Up</button>
+                <button type="submit" className="btn btn-primary rounded-3 shadow">
+                  Sign Up
+                </button>
               </div>
             </form>
           </div>
           <div className="card-footer text-center text-muted rounded-bottom-4">
-            <small>Already have an account? <Link to="/Login" className="text-primary text-decoration-none">Login here</Link></small>
+            <small>
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary text-decoration-none">
+                Login here
+              </Link>
+            </small>
           </div>
         </div>
       </div>

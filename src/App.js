@@ -1,5 +1,6 @@
 import "./App.css";
 import Navbar from "./Components/Navbar";
+import LandingPage from "./Components/LandingPage";
 import About from "./Components/About";
 import NoteState from "./Context/Notes/NoteState"
 import Alert from "./Components/Alert"
@@ -28,10 +29,11 @@ function App() {
        <Alert alert={alert} />
          <div className="container">
         <Routes>
-          <Route exact path="/" element={<Notes showAlert={showAlert} />} />
+          <Route exact path="/" element={<LandingPage />} />
+          <Route exact path="/notes" element={<Notes showAlert={showAlert} />} />
           <Route exact path="/about" element={<About />} />
-          <Route exact path="/Login" element={<Login  showAlert={showAlert}/>} />
-          <Route exact path="/Signup" element={<Signup  showAlert={showAlert}/>} />
+          <Route exact path="/login" element={<Login  showAlert={showAlert}/>} />
+          <Route exact path="/signup" element={<Signup  showAlert={showAlert}/>} />
         </Routes>
         </div>
       </Router>

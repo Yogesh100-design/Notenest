@@ -25,7 +25,7 @@ function Notes(props) {
       getAllNotes();
     }
     else{
-      navigate("/Login")
+      navigate("/login")
     }
   }, []);
 

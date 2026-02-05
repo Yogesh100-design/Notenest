@@ -49,20 +49,7 @@ const getAllNotes = async () => {
     const json = await response.json(); // Get saved notes from backend (optional)
     console.log(json)
 
-    // 👇 Temporarily hardcoded note (not ideal – replace with `json`)
-    const note = {
-      _id: "6876b2997ed5467a07cb1895",
-      user: "6876a0ec7ed5467a07cb186d",
-      title,
-      description,
-      tag,
-      priority: "Medium",
-      status: "Completed",
-      date: "2025-07-15T19:10:00.000Z",
-      __v: 0,
-    };
-
-    setNotes(notes.concat(note)); // Add new note to state
+    setNotes(notes.concat(json)); // Add new note to state
   };
 
   // ✅ 3. EDIT NOTE FUNCTION
@@ -117,7 +104,6 @@ const deleteNote = async (id) => {
     console.error("Error during deleteNote:", error.message);
   }
 };
-
 
 
 

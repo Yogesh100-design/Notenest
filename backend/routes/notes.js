@@ -18,8 +18,8 @@ router.get('/fetchAllNotes', fetchUser, async (req, res) => {
 
 //route 2: Adding new note of user
 router.post('/addNotes', fetchUser, [
-    body("description").isLength({ min: 5 }).withMessage("Name must be at least 5 characters long"),//description
-    body("title").isLength({ min: 5 }).withMessage("Password must be at least 5 characters long"),
+    body("description").isLength({ min: 5 }).withMessage("Description must be at least 5 characters long"),
+    body("title").isLength({ min: 5 }).withMessage("Title must be at least 5 characters long"),
   ], async (req, res) => {
      const {description,title,tag} = req.body
      const errors = validationResult(req);
@@ -27,7 +27,7 @@ router.post('/addNotes', fetchUser, [
           console.log("❌ Validation failed:", errors.array());
           return res.status(400).json({ errors: errors.array() });
         }
- try {
+  try {
       const newNote = new Notes({
       title,
       description,
@@ -35,8 +35,8 @@ router.post('/addNotes', fetchUser, [
       user: req.user.id
     });
 
-  const savedNtes=newNote.save();
-  res.send(savedNtes)
+  const savedNtes = await newNote.save();
+  res.json(savedNtes);
  } catch (error) {
     console.error("❌ Error while Adding notes:", error.message);
     res.status(500).send("Internal Server Error");

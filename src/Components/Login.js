@@ -25,7 +25,7 @@ const Login = (props) => {
   setCredentials({  email: "", password: "" });
 
   showAlert("Signup successful!", "success");
-  navigate("/");
+  navigate("/notes");
 } else {
         props.showAlert("Login failed: Invalid email or password", "danger");
       }
@@ -107,7 +107,7 @@ const Login = (props) => {
               <small>
                 Don't have an account?{" "}
                 <Link
-                  to="/Signup"
+                  to="/signup"
                   className="text-primary text-decoration-none"
                 >
                   Sign up
