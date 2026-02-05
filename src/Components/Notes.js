@@ -152,17 +152,12 @@ function Notes(props) {
 
       {/* Notes List */}
       <div className="container my-2">
-        <h1
-          className="text-center text-primary fw-bold display-5 mb-4"
-          style={{
-            letterSpacing: "1px",
-            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-          }}
-        >
-          📝 Your notes
-        </h1>
-        <div className="p-4 border border-primary rounded bg-transparent text-primary">
-          {notes.length===0 && 'No notes to display'}
+
+        <div className="row my-4">
+          <h2 className="text-center w-100 mb-4 text-primary">Your Notes</h2>
+          <div className="container mx-2"> 
+            {notes.length===0 && 'No notes to display'}
+          </div>
           {notes.map((note) => (
             <Noteitem key={note._id} note={note} updateNote={updateNote} />
           ))}

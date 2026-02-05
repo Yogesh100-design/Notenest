@@ -37,19 +37,29 @@ const getAllNotes = async () => {
   // ✅ 2. ADD NOTE FUNCTION
   const addNote = async (title, description, tag) => {
     // POST request to add a new note
-    const response = await fetch("http://localhost:5000/api/notes/addNotes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token')
-      },
-      body: JSON.stringify({ title, description, tag }), // Send note data as JSON
-    });
+    try {
+      const response = await fetch("http://localhost:5000/api/notes/addNotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({ title, description, tag }), // Send note data as JSON
+      });
 
-    const json = await response.json(); // Get saved notes from backend (optional)
-    console.log(json)
+      const json = await response.json(); 
 
-    setNotes(notes.concat(json)); // Add new note to state
+      if (json.errors) {
+        console.error("Validation errors:", json.errors);
+        return { success: false, errors: json.errors };
+      } else {
+        setNotes(notes.concat(json)); 
+        return { success: true };
+      }
+    } catch (error) {
+      console.error("Error adding note:", error);
+      return { success: false, error: error.message };
+    }
   };
 
   // ✅ 3. EDIT NOTE FUNCTION

@@ -10,11 +10,16 @@ const AddNotes = (props) => {
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const { addNote } = context;
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag);
-    setNote({ title: "", description: "", tag: "" })
-    props.showAlert("Note added successfuly ", "success");
+    const result = await addNote(note.title, note.description, note.tag);
+    
+    if (result.success) {
+      setNote({ title: "", description: "", tag: "" });
+      props.showAlert("Note added successfully!", "success");
+    } else {
+      props.showAlert("Failed to add note. Title/Description must be at least 5 chars.", "danger");
+    }
   }
   
   const onChange = (e) => {

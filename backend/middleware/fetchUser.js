@@ -10,6 +10,7 @@ console.log(jwtSecret);
 const fetchUser = (req, res, next) => {
     // 🔑 Get the token from request header
     const token = req.header("auth-token");
+    const secret = process.env.JWT_SECRET || "default_jwt_secret";
 
     if (!token) {
         return res.status(401).send({ error: "Please authenticate using a valid token" });
@@ -17,7 +18,7 @@ const fetchUser = (req, res, next) => {
 
     try {
         // ✅ Fix: Correct usage of jwt.verify (arguments were wrong)
-        const data = jwt.verify(token, jwtSecret); 
+        const data = jwt.verify(token, secret); 
         req.user = data.user; // You attached user info when creating token
         next();
     } catch (error) {
