@@ -35,14 +35,14 @@ const About = () => {
     <div className="row align-items-center">
       {/* Info Column (Left) */}
       <div className="col-md-8 text-center d-flex flex-column align-items-center mb-4 mb-md-0 mx-auto">
-  <h3 className="fw-bold">Yogesh Chavan</h3>
+  <h3 className="fw-bold">Pritam Gaikwad</h3>
   <p className="lead mb-2">A passionate developer on a coding journey 🚀</p>
   <p className="mb-3">Crafting clean and efficient solutions with modern web technologies.</p>
 
   {/* Optional: Social Links */}
   <div className="d-flex justify-content-center gap-3">
     <a href="#" className="text-white fs-4"><i className="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/yogesh-chavan-494196316/" className="text-white fs-4"><i className="fab fa-linkedin"></i></a>
+    <a href="" className="text-white fs-4"><i className="fab fa-linkedin"></i></a>
     <a href="#" className="text-white fs-4"><i className="fab fa-twitter"></i></a>
   </div>
 </div>
@@ -60,7 +60,7 @@ const About = () => {
     </div>
 
     <hr className="bg-white mt-4" />
-    <p className="text-center small mb-0">&copy; {new Date().getFullYear()} NoteNest | Built with ❤️ by Yogesh Chavan</p>
+    <p className="text-center small mb-0">&copy; {new Date().getFullYear()} NoteNest | Built with ❤️ by Pritam Gaikwad</p>
   </div>
 </footer>
 
