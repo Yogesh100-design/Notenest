@@ -26,8 +26,7 @@ function App() {
     <NoteState>
       <Router>
         <Navbar />
-       <Alert alert={alert} />
-         <div className="container">
+        <Alert alert={alert} />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/notes" element={<Notes showAlert={showAlert} />} />
@@ -35,7 +34,6 @@ function App() {
           <Route exact path="/login" element={<Login  showAlert={showAlert}/>} />
           <Route exact path="/signup" element={<Signup  showAlert={showAlert}/>} />
         </Routes>
-        </div>
       </Router>
       </NoteState>
     </>
