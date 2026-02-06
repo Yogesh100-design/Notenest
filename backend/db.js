@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const mongoURI = "mongodb://localhost:27017/inotebook";
+const mongoURI = "mongodb+srv://chavanyogesh8600:Chayogesh1209@yogesh.vczqb7r.mongodb.net/";
 
 
 const connectToMongo = async () => {
@@ -12,5 +12,5 @@ const connectToMongo = async () => {
     }
 };
 
-module.exports = connectToMongo;
+export default connectToMongo;
 

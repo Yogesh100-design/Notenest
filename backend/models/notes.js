@@ -1,6 +1,5 @@
-const { type } = require('@testing-library/user-event/dist/type');
-const mongoose =require('mongoose')
-const {Schema}=mongoose;
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 
 const NotesSchema = new Schema({
@@ -15,7 +14,7 @@ const NotesSchema = new Schema({
   description: {
    type : String,
    required : true,
- },
+  },
   tag: {
    type : String,
    default : "general"
@@ -26,4 +25,4 @@ const NotesSchema = new Schema({
  }
 });
 
-module.exports=mongoose.model('Notes',NotesSchema)
+export default mongoose.model('Notes', NotesSchema);

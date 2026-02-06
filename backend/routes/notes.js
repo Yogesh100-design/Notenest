@@ -1,8 +1,9 @@
-const express = require("express");
+import express from "express";
+import fetchUser from "../middleware/fetchUser.js";
+import Notes from "../models/notes.js";
+import { body, validationResult } from "express-validator";
+
 const router = express.Router();
-const fetchUser = require("../middleware/fetchUser");
-const Notes = require("../models/notes");
-const { body, validationResult } = require("express-validator");
 
 // Route 1: Fetch all notes of user from database
 router.get('/fetchAllNotes', fetchUser, async (req, res) => {
@@ -115,4 +116,4 @@ router.delete('/deletingNotes/:id', fetchUser, async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

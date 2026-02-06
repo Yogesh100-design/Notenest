@@ -58,7 +58,7 @@ const LandingPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="footer bg-dark text-white py-4 shadow-lg w-100 ">
+      <footer className="footer bg-dark text-white py-4 shadow-lg w-100">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-12 text-center">
