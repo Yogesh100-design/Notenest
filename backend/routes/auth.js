@@ -1,12 +1,13 @@
 // routes/auth.js
-const express = require("express");
-const dotenv = require("dotenv");
+import express from "express";
+import dotenv from "dotenv";
+import User from "../models/user.js";
+import { body, validationResult } from "express-validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import fetchUser from "../middleware/fetchUser.js";
+
 const router = express.Router();
-const User = require("../models/user");
-const { body, validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const fetchUser = require("../middleware/fetchUser");
 
 dotenv.config();
 const jwtSecret = process.env.JWT_SECRET || "default_jwt_secret"; // fallback secret
@@ -109,4 +110,4 @@ router.get("/getuser", fetchUser, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

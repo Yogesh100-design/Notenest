@@ -1,10 +1,9 @@
 // server.js
-const express = require('express');
-const connectToMongo = require('./db'); // Your MongoDB connection logic
-const authRoutes = require('./routes/auth'); // Auth routes
-const notesRoutes = require('./routes/notes');
-
-const cors = require('cors');
+import express from 'express';
+import connectToMongo from './db.js';
+import authRoutes from './routes/auth.js';
+import notesRoutes from './routes/notes.js';
+import cors from 'cors';
 
 const app = express();
 const port = 5000;
